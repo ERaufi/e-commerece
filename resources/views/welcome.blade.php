@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.mainLayout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
+@section('content')
 @include('subView.input',[
     'name'=>'name',
     'id'=>'name'
@@ -16,7 +9,4 @@
     'name'=>'emai',
     'id'=>'email'
 ])
-
-</body>
-
-</html>
+@endsection
