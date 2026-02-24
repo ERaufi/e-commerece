@@ -1,5 +1,5 @@
-<aside :class="sidebarOpen ? 'w-[var(--sidebar-width-expanded)]' : 'w-[var(--sidebar-width-collapsed)]'"
-    class="sidebar-container sidebar-transition glass-panel hidden lg:flex">
+<aside
+    class="sidebar-container sidebar-transition glass-panel">
     <!-- Brand -->
     <div class="sidebar-brand group">
         <div class="brand-logo">
@@ -9,7 +9,7 @@
         </div>
         <span x-show="sidebarOpen" x-transition:enter="transition opacity-0 translate-x-4 duration-300" x-transition:enter-end="opacity-100 translate-x-0"
             class="brand-name">
-            {{ config('app.name') }}
+            ERaufi
         </span>
     </div>
 
@@ -18,7 +18,7 @@
         <div class="nav-section">
             <p x-show="sidebarOpen" class="nav-section-title">Core</p>
 
-            {{-- <a href="{{ route('dashboard') }}" class="nav-item group {{ request()->routeIs('dashboard') ? 'nav-item-active active' : '' }}">
+            <a href="#" class="nav-item group {{ request()->routeIs('dashboard') ? 'nav-item-active active' : '' }}">
                 <div class="nav-icon-wrapper">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -28,7 +28,7 @@
                 <span x-show="sidebarOpen" class="nav-label">Dashboard</span>
             </a>
 
-            <a href="{{ route('categories.index') }}" class="nav-item group {{ request()->routeIs('categories.*') ? 'nav-item-active active' : '' }}">
+            <a href="#" class="nav-item group {{ request()->routeIs('categories.*') ? 'nav-item-active active' : '' }}">
                 <div class="nav-icon-wrapper">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
@@ -37,7 +37,7 @@
                 <span x-show="sidebarOpen" class="nav-label">Categories</span>
             </a>
 
-            <a href="{{ route('brands.index') }}" class="nav-item group {{ request()->routeIs('brands.*') ? 'nav-item-active active' : '' }}">
+            <a href="#" class="nav-item group {{ request()->routeIs('brands.*') ? 'nav-item-active active' : '' }}">
                 <div class="nav-icon-wrapper">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -47,7 +47,7 @@
                 <span x-show="sidebarOpen" class="nav-label">Brands</span>
             </a>
 
-            <a href="{{ route('tags.index') }}" class="nav-item group {{ request()->routeIs('tags.*') ? 'nav-item-active active' : '' }}">
+            <a href="#" class="nav-item group {{ request()->routeIs('tags.*') ? 'nav-item-active active' : '' }}">
                 <div class="nav-icon-wrapper">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -59,7 +59,7 @@
                 <span x-show="sidebarOpen" class="nav-label">Tags</span>
             </a>
 
-            <a href="{{ route('products.index') }}" class="nav-item group {{ request()->routeIs('products.*') ? 'nav-item-active active' : '' }}">
+            <a href="#" class="nav-item group {{ request()->routeIs('products.*') ? 'nav-item-active active' : '' }}">
                 <div class="nav-icon-wrapper">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -69,7 +69,7 @@
                 <span x-show="sidebarOpen" class="nav-label">Products</span>
             </a>
 
-            <a href="{{ route('orders.index') }}" class="nav-item group {{ request()->routeIs('orders.*') ? 'nav-item-active active' : '' }}">
+            <a href="#" class="nav-item group {{ request()->routeIs('orders.*') ? 'nav-item-active active' : '' }}">
                 <div class="nav-icon-wrapper">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -78,7 +78,7 @@
                 <span x-show="sidebarOpen" class="nav-label">Orders</span>
             </a>
 
-            <a href="{{ route('payments.index') }}" class="nav-item group {{ request()->routeIs('payments.*') ? 'nav-item-active active' : '' }}">
+            <a href="#" class="nav-item group {{ request()->routeIs('payments.*') ? 'nav-item-active active' : '' }}">
                 <div class="nav-icon-wrapper">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -86,23 +86,7 @@
                     </svg>
                 </div>
                 <span x-show="sidebarOpen" class="nav-label">Transactions</span>
-            </a> --}}
+            </a>
         </div>
     </nav>
-
-    <!-- Sidebar Profile -->
-    <div class="sidebar-profile group">
-        <div class="profile-container">
-            <div class="profile-avatar-wrapper">
-                <div class="profile-avatar">
-                    {{-- {{ substr(Auth::user()->name, 0, 1) }} --}}
-                </div>
-                <div class="online-indicator"></div>
-            </div>
-            <div class="profile-info" x-show="sidebarOpen">
-                {{-- <p class="profile-name">{{ Auth::user()->name }}</p> --}}
-                {{-- <p class="profile-email">{{ Auth::user()->email }}</p> --}}
-            </div>
-        </div>
-    </div>
 </aside>

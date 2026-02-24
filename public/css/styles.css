@@ -82,9 +82,53 @@
 }
 
 /* Utility Classes */
-.text-right {
-    text-align: right;
+[x-cloak] { display: none !important; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-1 { flex: 1 1 0%; }
+.flex-shrink-0 { flex-shrink: 0; }
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.items-center { align-items: center; }
+
+.h-screen { height: 100vh; }
+.h-full { height: 100%; }
+.min-h-screen { min-height: 100vh; }
+.min-h-full { min-height: 100%; }
+.w-full { width: 100%; }
+.min-w-0 { min-width: 0; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+
+.overflow-hidden { overflow: hidden; }
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+
+.hidden { display: none; }
+
+@media (min-width: 1024px) {
+    .lg\:flex { display: flex; }
+    .lg\:hidden { display: none; }
+    .lg\:px-10 { padding-left: 2.5rem; padding-right: 2.5rem; }
 }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.mt-20 { margin-top: 5rem; }
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.text-sm { font-size: 0.875rem; }
+.text-slate-500 { color: #64748b; }
+.text-slate-100 { color: #f1f5f9; }
+
+.border-t { border-top-width: 1px; }
+.border-white\/5 { border-color: rgba(255, 255, 255, 0.05); }
 
 .text-secondary {
     color: #94a3b8;

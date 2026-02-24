@@ -46,18 +46,18 @@
                 <button @click="open = !open" class="user-btn group">
                     <div class="user-avatar-container">
                         <div class="user-avatar-inner">
-                            {{-- {{ substr(Auth::user()->name, 0, 1) }} --}}
+                            {{ Auth::check() ? substr(Auth::user()->name, 0, 1) : 'G' }}
                         </div>
                     </div>
                 </button>
 
-                <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-200"
+                <div x-show="open" x-cloak @click.away="open = false" x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="transform opacity-0 scale-95 translate-y-2" x-transition:enter-end="transform opacity-100 scale-100 translate-y-0"
                     x-transition:leave="transition ease-in duration-150" x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
                     x-transition:leave-end="transform opacity-0 scale-95 translate-y-2" class="navbar-dropdown">
                     <div class="dropdown-header">
                         <p class="dropdown-header-label">Authenticated as</p>
-                        {{-- <p class="dropdown-header-value">{{ Auth::user()->name }}</p> --}}
+                        <p class="dropdown-header-value">{{ Auth::check() ? Auth::user()->name : 'Guest' }}</p>
                     </div>
 
 
@@ -72,7 +72,7 @@
 
                     <div class="dropdown-sep"></div>
 
-                    {{-- <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="#">
                         @csrf
                         <button type="submit" class="dropdown-btn-danger">
                             <svg class="dropdown-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,7 +81,7 @@
                             </svg>
                             Sign out
                         </button>
-                    </form> --}}
+                    </form>
                 </div>
             </div>
         </div>
