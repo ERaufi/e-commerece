@@ -16,13 +16,12 @@
         <!-- Scripts -->
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-        <!-- Alpine.js -->
-        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 
 
     </head>
 
-    <body class="antialiased bg-mesh text-slate-100 min-h-screen" x-data="{ sidebarOpen: true, mobileOpen: false }">
+    <body class="antialiased bg-mesh text-slate-100 min-h-screen">
         <div class="flex h-screen overflow-hidden">
             <!-- Sidebar (Desktop) -->
             @include('layouts.sidebar')
@@ -47,7 +46,6 @@
                 </main>
             </div>
         </div>
-    </body>
     </body>
 
 </html>

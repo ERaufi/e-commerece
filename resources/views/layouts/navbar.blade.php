@@ -3,24 +3,14 @@
     <div class="navbar-wrapper glass-panel">
         <!-- Left Section -->
         <div class="navbar-left">
-            <button @click="mobileOpen = true" class="navbar-btn lg:hidden">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-            <button @click="sidebarOpen = !sidebarOpen" class="navbar-btn hidden lg:flex">
-                <svg class="w-6 h-6 transform transition-transform duration-300" :class="!sidebarOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-                </svg>
-            </button>
+
 
         </div>
 
         <!-- Right Section -->
         <div class="navbar-right">
             <!-- Search Suggestion (Visual Only) -->
-            <div class="navbar-search-box group">
+            <div class="navbar-search-box">
                 <div class="search-hint">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -42,8 +32,8 @@
             </button>
 
             <!-- User Dropdown -->
-            <div x-data="{ open: false }" class="relative">
-                <button @click="open = !open" class="user-btn group">
+            <div class="relative">
+                <button class="user-btn">
                     <div class="user-avatar-container">
                         <div class="user-avatar-inner">
                             {{ Auth::check() ? substr(Auth::user()->name, 0, 1) : 'G' }}
@@ -51,10 +41,7 @@
                     </div>
                 </button>
 
-                <div x-show="open" x-cloak @click.away="open = false" x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="transform opacity-0 scale-95 translate-y-2" x-transition:enter-end="transform opacity-100 scale-100 translate-y-0"
-                    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
-                    x-transition:leave-end="transform opacity-0 scale-95 translate-y-2" class="navbar-dropdown">
+                <div class="navbar-dropdown">
                     <div class="dropdown-header">
                         <p class="dropdown-header-label">Authenticated as</p>
                         <p class="dropdown-header-value">{{ Auth::check() ? Auth::user()->name : 'Guest' }}</p>
