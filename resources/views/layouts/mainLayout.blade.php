@@ -16,9 +16,7 @@
         <!-- Scripts -->
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-
-
-
+        @yield('styles')
     </head>
 
     <body class="antialiased bg-mesh text-slate-100 min-h-screen">
@@ -47,5 +45,7 @@
             </div>
         </div>
     </body>
+
+    @yield('scripts')
 
 </html>
