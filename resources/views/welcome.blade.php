@@ -1,12 +1,21 @@
 @extends('layouts.mainLayout')
 
-@section('content')
-@include('subView.input',[
-    'name'=>'name',
-    'id'=>'name'
-])
-@include('subView.input',[
-    'name'=>'emai',
-    'id'=>'email'
-])
+
+
+
+@section('contect')
+<input type="text" value="asdfasdf"/>
+@endsection
+
+
+
+
+
+@section('styles')
+<style>
+
+    h1{
+        color: red;
+    }
+</style>
 @endsection
