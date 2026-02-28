@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FirstController;
+use App\Http\Controllers\MySecondController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',function(){
@@ -23,3 +24,4 @@ Route::get('about-us/{id}/{name}','aboutus');
 Route::get('abc','abc');
 });
 
+Route::get('showController',MySecondController::class);
