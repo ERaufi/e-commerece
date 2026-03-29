@@ -4,49 +4,86 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
     //
-    public function index()
+    public function store()
     {
-        return Category::all();
+        // DB::table('categories')->insert([
+        //     'name'=>'123456',
+        //     'slug'=>'abc',
+        //     'image'=>'lsdkfjlsdkf',
+        // ]);
+
+        // DB::table('categories')->insert([
+        //     ['name'=>'1234563213',
+        //     'slug'=>'abc12312',
+        //     'image'=>'ls12312'],
+        //     [
+        //         'name'=>'ssss',
+        //         'slug'=>'ffss',
+        //         'image'=>'cvvvv',
+        //     ]
+        // ]);
+
+        $id=DB::table('categories')->insertGetId([
+            'name'=>'123svfv',
+            'slug'=>'tttt',
+            'image'=>'lsdkfjlsdkf',
+        ]);
+
+        return $id;
     }
 
-    public function add()
+    public function getMyData()
     {
-        $item=new Category();
-        $item->name='First Category 111';
-        $item->slug='first_slug 1111';
-        $item->image='this is image';
-        $item->save();
+        $categories=DB::table('categories')
+        ->where('id',71)
+        ->value('name');
 
-        return 'added successfully';
+        return $categories;
     }
 
-
-    public function show($id)
+    public function whereCond()
     {
-        $item=Category::findOrFail($id);
+        // $categories=DB::table('categories')
+        // ->where('name','=','Toys')
+        // ->orwhere('id','=',44)
+        // ->get();
 
-        return $item;
+        //         $categories=DB::table('categories')
+        // ->whereIn('id',[1,2,3])
+        // ->get();
+
+        // $categories=DB::table('categories')
+        // ->whereBetween('id',[1,10])
+        // ->get();
+
+        $categories=DB::table('categories')
+        ->whereNull('image')
+        ->get();
+
+        return $categories;
     }
 
-    public function update($id)
+    public function update()
     {
-        $item=Category::findOrFail($id);
-        $item->name='new and updated name';
-        $item->update();
+        DB::table('categories')
+        ->where('id','5')
+        ->update(['name'=>'123','slug'=>'new_slug']);
 
-        return 'updated successfully';
-
+        return 'successfully';
     }
 
-    public function delete($id)
+    public function detelesssssw()
     {
-        $item=Category::findOrFail($id);
-        $item->delete();
+        DB::table('categories')
+        ->where('id','10')
+        ->delete();
 
         return 'deleted successfully';
     }
+
 }

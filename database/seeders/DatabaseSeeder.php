@@ -25,8 +25,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Category::factory(10)->create();
-        Brand::factory(10)->create();
-        Product::factory(10)->create();
+        // Category::factory(10)->create();
+        // Brand::factory(10)->create();
+        // Product::factory(10)->create();
+
+        $this->call(CategoriesSeeder::class);
     }
 }
