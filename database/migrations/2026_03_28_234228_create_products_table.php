@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('status')->default('draft');
             $table->string('thumbnail')->nullable();
-            $table->foreignId('created_by')->constrained('users')->casecadeOnDelete();
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
