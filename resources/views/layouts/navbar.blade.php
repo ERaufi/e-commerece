@@ -33,7 +33,7 @@
                         </button>
 
                         <!-- User Dropdown -->
-                        <div class="relative">
+                        <div class="relative user-dropdown-wrapper">
                             <button class="user-btn">
                                 <div class="user-avatar-container">
                                     <div class="user-avatar-inner">
