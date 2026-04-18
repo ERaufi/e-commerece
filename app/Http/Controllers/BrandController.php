@@ -4,107 +4,81 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
     //
 
-    public function addData()
+    public function index(Request $request)
     {
-        // $item=new Brand();
-        // $item->name='Nike';
-        // $item->slug='nike';
-        // $item->image='image.jpg';
-        // $item->save();
-
-        // Brand::insert([
-        // [
-        //     'name'=>'Nike Pro 1',
-        //     'slug'=>'nike_pro1',
-        //     'image'=>'image.jpg'
-        // ],
-        // [
-        //     'name'=>'Nike Pro2',
-        //     'slug'=>'nike_pro2',
-        //     'image'=>'image.jpg'
-        // ],
-        // [
-        //     'name'=>'Nike Pro3',
-        //     'slug'=>'nike_pro3',
-        //     'image'=>'image.jpg'
-        // ]
-        // ]);
-
-    //     $brand=Brand::where('name','Nike Pro2')->first();
-    // if($brand)
-    //     {
-    //         $brand->name='Nike Pro2';
-    //         $brand->slug='nike_pro2';
-    //         $brand->image='image.jpg';
-    //         $brand->update();
-    //     }else{
-    //         $brand=new Brand();
-    //         $brand->name='Nike Pro2';
-    //         $brand->slug='nike_pro2';
-    //         $brand->image='image.jpg';
-    //         $brand->save();
-    //     }
-
-    // $brand=Brand::firstOrCreate(
-    //     ['name'=>'Nike Golden'],
-    //     ['slug'=>'nike_golden','image'=>'image.jpg']
-    //     );
-
-    $brand=Brand::updateOrCreate(
-        ['name'=>'Nike Golden'],
-        [
-        'slug'=>'ssssss','image'=>'image2.jpg']
-        );
-
-        return $brand;
+        $brands=Brand::when($request->search_field,function($query) use ($request){
+            return $query->whereAny([
+                'name',
+                'slug'
+            ],'like','%'.$request->search_field.'%');
+        })->paginate(20);
+        return view('brands.index',compact('brands'));
     }
 
-
-    public function getData()
+    public function create(Request $request)
     {
-        // $items=Brand::all();
-        // $items=Brand::findOrFail(99999989);
-        // $items=Brand::first();
-        // $items=Brand::latest()->first();
 
-        // $items=Brand::onlyTrashed()->get();
-        // $items=Brand::withTrashed()->get();
-        // $items=Brand::withTrashed()->find(4);
-        // $items->restore();
+    $path=' ';
+        if($request->hasFile('image'))
+            {
+                $path=$request->file('image')->store('brands','public');
+            }
 
-        $items=Brand::find(5);
-        $items->forceDelete();
-        return $items;
+        $item=new Brand();
+        $item->name=$request->name;
+        $item->slug=$request->slug;
+        $item->image=$path;
+        $item->save();
+
+        return back();
     }
 
-
-    public function updateData()
+    public function edit($id)
     {
-        // $item=Brand::find(21);
-        // $item->name='Nike Updated again';
-        // $item->slug='nike_updated_again';
-        // $item->update();
-
-        Brand::where('id','21')->update([
-            'name'=>'nike next update',
-            'slug'=>'nike_next_update'
-        ]);
-
-        return 'updated successfully';
+        $brand=Brand::where('id',$id)->first();
+        return view('brands.edit',compact('brand'));
     }
 
-    public function deleteData()
+    public function update(Request $request,$id)
     {
-        // $items=Brand::find(25);
-        // $items->delete();
+        $item=Brand::where('id',$id)->first();
+        $path=' ';
+    if($request->hasFile('image'))
+        {
+            if($item->image)
+                {
+                    Storage::disk('public')->delete($item->image);
+                }
 
-        Brand::where('id',4)->delete();
+                $path=$request->file('image')->store('brands','public');
+        }
 
-        return 'deleted successfully';
+        $item->name=$request->name;
+        $item->slug=$request->slug;
+        $item->image=$path;
+        $item->update();
+
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $brand=Brand::where('id',$id)->first();
+
+        if($brand->image)
+            {
+                Storage::disk('public')->delete($brand->image);
+            }
+
+
+        $brand->delete();
+
+        return back();
     }
 }
