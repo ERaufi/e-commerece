@@ -5,85 +5,80 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
     //
-    public function store()
+    public function index(Request $request)
     {
-        // DB::table('categories')->insert([
-        //     'name'=>'123456',
-        //     'slug'=>'abc',
-        //     'image'=>'lsdkfjlsdkf',
-        // ]);
-
-        // DB::table('categories')->insert([
-        //     ['name'=>'1234563213',
-        //     'slug'=>'abc12312',
-        //     'image'=>'ls12312'],
-        //     [
-        //         'name'=>'ssss',
-        //         'slug'=>'ffss',
-        //         'image'=>'cvvvv',
-        //     ]
-        // ]);
-
-        $id=DB::table('categories')->insertGetId([
-            'name'=>'123svfv',
-            'slug'=>'tttt',
-            'image'=>'lsdkfjlsdkf',
-        ]);
-
-        return $id;
+        $categories=Category::when($request->search_field,function($query) use ($request){
+            return $query->whereAny([
+                'name',
+                'slug'
+            ],'like','%'.$request->search_field.'%');
+        })->paginate(20);
+        return view('category.index',compact('categories'));
     }
 
-    public function getMyData()
+    public function create(Request $request)
     {
-        $categories=DB::table('categories')
-        ->where('id',71)
-        ->value('name');
 
-        return $categories;
+    $path=' ';
+        if($request->hasFile('image'))
+            {
+                $path=$request->file('image')->store('category','public');
+            }
+
+        $item=new Category();
+        $item->name=$request->name;
+        $item->slug=$request->slug;
+        $item->image=$path;
+        $item->save();
+
+        return back();
     }
 
-    public function whereCond()
+    public function edit($id)
     {
-        // $categories=DB::table('categories')
-        // ->where('name','=','Toys')
-        // ->orwhere('id','=',44)
-        // ->get();
-
-        //         $categories=DB::table('categories')
-        // ->whereIn('id',[1,2,3])
-        // ->get();
-
-        // $categories=DB::table('categories')
-        // ->whereBetween('id',[1,10])
-        // ->get();
-
-        $categories=DB::table('categories')
-        ->whereNull('image')
-        ->get();
-
-        return $categories;
+        $brand=Category::where('id',$id)->first();
+        return view('category.edit',compact('brand'));
     }
 
-    public function update()
+    public function update(Request $request,$id)
     {
-        DB::table('categories')
-        ->where('id','5')
-        ->update(['name'=>'123','slug'=>'new_slug']);
+        $item=Category::where('id',$id)->first();
+        $path=' ';
+    if($request->hasFile('image'))
+        {
+            if($item->image)
+                {
+                    Storage::disk('public')->delete($item->image);
+                }
 
-        return 'successfully';
+                $path=$request->file('image')->store('category','public');
+        }
+
+        $item->name=$request->name;
+        $item->slug=$request->slug;
+        $item->image=$path;
+        $item->update();
+
+        return back();
     }
 
-    public function detelesssssw()
+    public function destroy($id)
     {
-        DB::table('categories')
-        ->where('id','10')
-        ->delete();
+        $brand=Category::where('id',$id)->first();
 
-        return 'deleted successfully';
+        if($brand->image)
+            {
+                Storage::disk('public')->delete($brand->image);
+            }
+
+
+        $brand->delete();
+
+        return back();
     }
-
 }
