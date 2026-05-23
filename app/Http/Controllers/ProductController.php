@@ -6,6 +6,9 @@ use App\Http\Requests\ProductsRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tags;
+use App\Models\User;
+use Illuminate\Container\Attributes\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -106,5 +109,14 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+    }
+
+    public function show()
+    {
+        $item = Product::with('brand:id,name', 'category:id,name', 'creator', 'images', 'tags')
+        ->get();
+
+        // $item = Tags::with('products')->get();
+        return $item;
     }
 }

@@ -28,14 +28,24 @@ class Product extends Model
         'created_by',
     ];
 
+    public function scopeDraft($query)
+    {
+        return $query->where('status', 'draft');
+    }
+
+    public function scopeStatus($query, $stutsType)
+    {
+        return $query->where('status', $stutsType);
+    }
+
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function creator()
@@ -45,16 +55,11 @@ class Product extends Model
 
     public function images()
     {
-        return $this->hasMany(ProductImage::class);
+        return $this->hasMany(ProductImage::class, 'product_id');
     }
 
-    public function scopeDraft($query)
+    public function tags()
     {
-        return $query->where('status', 'draft');
-    }
-
-    public function scopeStatus($query, $stutsType)
-    {
-        return $query->where('status', $stutsType);
+        return $this->belongsToMany(Tags::class, 'product_tags', 'product_id', 'tag_id');
     }
 }
