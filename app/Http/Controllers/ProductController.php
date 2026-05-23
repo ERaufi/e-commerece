@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductsRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -24,22 +25,13 @@ class ProductController extends Controller
         $brands = Brand::all();
         return view('Products.create', compact('categories', 'brands'));
     }
-    public function store(Request $request)
+    public function store(ProductsRequest $request)
     {
-        $data = $request->validated();
-        $data['slug'] = $request->slug ? Str::slug($request->slug) : Str::slug($request->name);
-        $data['created_by'] = Auth::id();
-
-        if ($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $request->file('thumbnail')->store('products/thumbnails', 'public');
-        }
-
-        // $product = products::create($data);
         $product = new Product();
         $product->brand_id = $request->brand_id;
         $product->category_id = $request->category_id;
         $product->name = $request->name;
-        $product->slug = $request->slug;
+        $product->slug = $request->slug ? Str::slug($request->slug) : Str::slug($request->name);
         $product->regular_price = $request->regular_price;
         $product->sale_price = $request->sale_price;
         $product->sku = $request->sku;
@@ -49,23 +41,21 @@ class ProductController extends Controller
         $product->short_description = $request->short_description;
         $product->description = $request->description;
         $product->status = $request->status;
+        $product->created_by = 1;
 
         if ($request->hasFile('thumbnail')) {
             $product->thumbnail = $request->file('thumbnail')->store('products/thumbnails', 'public');
         }
+
+        $product->save();
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('products/gallery', 'public');
                 $product->images()->create([
                     'path' => $path,
-                    'created_by' => Auth::id(),
                 ]);
             }
-        }
-
-        if ($request->has('tags')) {
-            $product->tags()->sync($request->tags);
         }
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
@@ -83,7 +73,7 @@ class ProductController extends Controller
         $product->brand_id = $request->brand_id;
         $product->category_id = $request->category_id;
         $product->name = $request->name;
-        $product->slug = $request->slug ?: Str::slug($request->name);
+        $product->slug = $request->slug ? Str::slug($request->slug) : Str::slug($request->name);
         $product->regular_price = $request->regular_price;
         $product->sale_price = $request->sale_price;
         $product->sku = $request->sku;

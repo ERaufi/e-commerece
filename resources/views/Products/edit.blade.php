@@ -7,7 +7,7 @@
         </h2>
     </div>
 
-    <div class="page-container narrow">
+    <div class="page-container">
         <div class="table-card">
             <div class="card-body">
                 <form method="POST" action="{{ route('products.update', $product->id) }}" enctype="multipart/form-data">
