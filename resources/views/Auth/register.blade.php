@@ -15,7 +15,7 @@
     @endif
 
     <div class="guest-card">
-        <form method="POST" action="{{ route('register.store') }}">
+        <form method="POST" action="{{ URL('/register') }}">
             @csrf
 
             <div class="form-group">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="form-actions">
-                <a href="{{ route('login') }}" class="guest-link">Already registered?</a>
+                <a href="{{ URL('/login') }}" class="guest-link">Already registered?</a>
                 <button type="submit" class="btn-primary">
                     <svg class="w-4 h-4 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
