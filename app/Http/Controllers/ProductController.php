@@ -113,10 +113,32 @@ class ProductController extends Controller
 
     public function show()
     {
-        $item = Product::with('brand:id,name', 'category:id,name', 'creator', 'images', 'tags')
-        ->get();
+        // $item = Product::with('brand:id,name', 'category:id,name', 'creator', 'images', 'tags')
+        // ->get();
 
         // $item = Tags::with('products')->get();
+
+        $item = Brand::query()
+            ->whereDoesntHave('products', function ($query) {
+                return $query->where('stock_status', 'instock');
+            })
+            ->with(['products' => function ($query) {
+                return $query->where('stock_status', '!=', 'instock');
+            }])
+            // ->with(['products' => function ($query) {
+            //     return $query->where('id', '>', 5)
+            //         ->where('stock_status', 'instock')
+            //     ;
+            // }])
+            // withCount('products')
+            // ->withSum('products', 'regular_price')
+            // ->withAvg('products', 'regular_price')
+            // ->withMax('products', 'regular_price')
+            // ->withMin('products', 'regular_price')
+            // ->withExists('products')
+            // // ->whereHas('products')
+            // ->whereDoesntHave('products')
+            ->get();
         return $item;
     }
 }
