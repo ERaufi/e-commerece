@@ -45,7 +45,8 @@
                             <div class="navbar-dropdown">
                                 <div class="dropdown-header">
                                     <p class="dropdown-header-label">Authenticated as</p>
-                                    <p class="dropdown-header-value">Guest</p>
+                                    <p class="dropdown-header-value">{{ Auth::check() ? Auth::user()->name : 'Guest' }}
+                                    </p>
                                 </div>
 
 
@@ -62,7 +63,7 @@
 
                                 <div class="dropdown-sep"></div>
 
-                                <form method="POST" action="#">
+                                <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="dropdown-btn-danger">
                                         <svg class="dropdown-item-icon" fill="none" stroke="currentColor"
