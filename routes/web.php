@@ -10,14 +10,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'authenticate'])->name('login.store');
-Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/register', [AuthController::class, 'store'])->name('register.store');
+Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('login.store')->middleware('guest');
+Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
+Route::post('/register', [AuthController::class, 'store'])->name('register.store')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::prefix('brands')->group(function () {
-    Route::get('/', [BrandController::class, 'index']);
+Route::prefix('brands')->middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('/', [BrandController::class, 'index'])->middleware(['throttle:3,1']);
     Route::view('create', 'brands.add');
     Route::post('add', [BrandController::class, 'create']);
     Route::delete('delete/{id}', [BrandController::class, 'destroy']);
