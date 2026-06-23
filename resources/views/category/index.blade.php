@@ -2,7 +2,7 @@
 
 
 @section('contect')
-   <div class="page-header">
+    <div class="page-header">
         <div>
             <h2 class="page-title">Category</h2>
             <p class="page-subtitle">Manage product manufacturers and logos.</p>
@@ -10,13 +10,16 @@
     </div>
 
     <div>
-        <a href="{{URL('categories/create')}}">Create New</a>
+        {{-- <a href="{{URL('categories/create')}}">Create New</a> --}}
+        <x-button href="categories/create">
+            Create New Category
+        </x-button>
     </div>
 
     <div class="table-card">
 
-        <form action="{{URL('categories')}}" method="GET">
-            <input type="text" name="search_field" class="form-control" value="{{request('search_field')}}"/>
+        <form action="{{ URL('categories') }}" method="GET">
+            <input type="text" name="search_field" class="form-control" value="{{ request('search_field') }}" />
             <button type="submit">Search</button>
         </form>
 
@@ -31,37 +34,36 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($categories as $category)
+                @foreach ($categories as $category)
                     <tr>
                         <td>
-                            <img src="{{asset('storage/'.$category->image)}}" style="width: 50px"/>
+                            <img src="{{ asset('storage/' . $category->image) }}" style="width: 50px" />
                         </td>
                         <td>
-                            <div class="user-name">{{$category->name}}</div>
-                            <div class="text-secondary text-xs">{{$category->slug}}</div>
+                            <div class="user-name">{{ $category->name }}</div>
+                            <div class="text-secondary text-xs">{{ $category->slug }}</div>
                         </td>
                         <td class="text-secondary text-sm">
-                            {{$category->created_at}}
+                            {{ $category->created_at }}
                         </td>
                         <td>
                             <div class="flex-end-gap-2">
-                                <a href="{{URL('categories/edit',$category->id)}}" class="btn-secondary">Edit</a>
-                                <form action="{{URL('categories/delete',$category->id)}}" method="post">
+                                <a href="{{ URL('categories/edit', $category->id) }}" class="btn-secondary">Edit</a>
+                                <form action="{{ URL('categories/delete', $category->id) }}" method="post">
                                     @method('DELETE')
                                     @csrf
-                                    <button class="btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this Category?')">
+                                    <button class="btn-danger" type="submit"
+                                        onclick="return confirm('Are you sure you want to delete this Category?')">
                                         Delete
                                     </button>
                                 </form>
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                @endforeach
             </tbody>
         </table>
 
-        {{$categories
-        ->appends(request()->query())
-        ->links('pagination::bootstrap-5')}}
+        {{ $categories->appends(request()->query())->links('pagination::bootstrap-5') }}
     </div>
 @endsection

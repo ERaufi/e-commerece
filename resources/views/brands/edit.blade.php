@@ -2,6 +2,9 @@
 
 
 @section('contect')
+
+    <x-validation-errors />
+
     <div class="page-container narrow">
         <div class="table-card">
             <div class="card-body">

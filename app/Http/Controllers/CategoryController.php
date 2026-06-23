@@ -12,28 +12,30 @@ class CategoryController extends Controller
     //
     public function index(Request $request)
     {
-        $categories=Category::when($request->search_field,function($query) use ($request){
+        $categories = Category::when($request->search_field, function ($query) use ($request) {
             return $query->whereAny([
                 'name',
                 'slug'
-            ],'like','%'.$request->search_field.'%');
+            ], 'like', '%' . $request->search_field . '%');
         })->paginate(20);
-        return view('category.index',compact('categories'));
+        return view('category.index', compact('categories'));
     }
 
     public function create(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+        ]);
+        $path = ' ';
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('category', 'public');
+        }
 
-    $path=' ';
-        if($request->hasFile('image'))
-            {
-                $path=$request->file('image')->store('category','public');
-            }
-
-        $item=new Category();
-        $item->name=$request->name;
-        $item->slug=$request->slug;
-        $item->image=$path;
+        $item = new Category();
+        $item->name = $request->name;
+        $item->slug = $request->slug;
+        $item->image = $path;
         $item->save();
 
         return back();
@@ -41,27 +43,25 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        $brand=Category::where('id',$id)->first();
-        return view('category.edit',compact('brand'));
+        $brand = Category::where('id', $id)->first();
+        return view('category.edit', compact('brand'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $item=Category::where('id',$id)->first();
-        $path=' ';
-    if($request->hasFile('image'))
-        {
-            if($item->image)
-                {
-                    Storage::disk('public')->delete($item->image);
-                }
+        $item = Category::where('id', $id)->first();
+        $path = ' ';
+        if ($request->hasFile('image')) {
+            if ($item->image) {
+                Storage::disk('public')->delete($item->image);
+            }
 
-                $path=$request->file('image')->store('category','public');
+            $path = $request->file('image')->store('category', 'public');
         }
 
-        $item->name=$request->name;
-        $item->slug=$request->slug;
-        $item->image=$path;
+        $item->name = $request->name;
+        $item->slug = $request->slug;
+        $item->image = $path;
         $item->update();
 
         return back();
@@ -69,12 +69,11 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        $brand=Category::where('id',$id)->first();
+        $brand = Category::where('id', $id)->first();
 
-        if($brand->image)
-            {
-                Storage::disk('public')->delete($brand->image);
-            }
+        if ($brand->image) {
+            Storage::disk('public')->delete($brand->image);
+        }
 
 
         $brand->delete();

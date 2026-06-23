@@ -7,15 +7,8 @@
         </h2>
     </div>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <x-validation-errors />
+
     <div class="page-container">
         <div class="table-card">
             <div class="card-body">

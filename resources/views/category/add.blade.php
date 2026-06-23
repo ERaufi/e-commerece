@@ -1,10 +1,13 @@
 @extends('layouts.mainLayout')
 
 @section('contect')
+
+    <x-validation-errors />
+
     <div class="page-container narrow">
         <div class="table-card">
             <div class="card-body">
-                <form method="POST" action="{{URL('categories/add')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{ URL('categories/add') }}" enctype="multipart/form-data">
                     @csrf
 
                     @include('category.Templates.Fields')

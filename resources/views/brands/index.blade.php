@@ -10,7 +10,10 @@
     </div>
 
     <div>
-        <a href="{{URL('brands/create')}}">Create New</a>
+        {{-- <a href="{{URL('brands/create')}}">Create New</a> --}}
+        <x-button href="brands/create">
+            Create New Brand
+        </x-button>
     </div>
 
     <div class="table-card">

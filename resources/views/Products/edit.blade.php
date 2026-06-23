@@ -7,6 +7,8 @@
         </h2>
     </div>
 
+    <x-validation-errors />
+
     <div class="page-container">
         <div class="table-card">
             <div class="card-body">

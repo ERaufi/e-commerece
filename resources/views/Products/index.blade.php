@@ -6,12 +6,16 @@
             <h2 class="page-title">{{ __('Products Management') }}</h2>
             <p class="page-subtitle">Manage your inventory, prices, and product visibility.</p>
         </div>
-        <a href="{{ route('products.create') }}" class="btn-primary">
+        {{-- <a href="{{ route('products.create') }}" class="btn-primary">
             <svg class="w-5 h-5 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
             </svg>
             {{ __('New Product') }}
-        </a>
+        </a> --}}
+
+        <x-button href="products/create">
+            Create New Product
+        </x-button>
     </div>
 
     <div class="page-container">

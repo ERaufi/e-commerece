@@ -59,7 +59,7 @@
         <div class="form-group">
             <label for="brand_id" class="form-label">Brand</label>
             <div class="select-wrapper">
-                <select id="brand_id" name="brand_id" class="form-control custom-select">
+                {{-- <select id="brand_id" name="brand_id" class="form-control custom-select">
                     <option value="">Select Brand...</option>
                     @foreach ($brands as $brand)
                         <option value="{{ $brand->id }}"
@@ -67,7 +67,9 @@
                             {{ $brand->name }}
                         </option>
                     @endforeach
-                </select>
+                </select> --}}
+
+                <x-brand-dropdown name="brand_id" id="brand_id" :product="$product ?? null" />
                 @error('brand_id')
                     <p class="form-error">{{ $message }}</p>
                 @enderror

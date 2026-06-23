@@ -12,28 +12,30 @@ class BrandController extends Controller
 
     public function index(Request $request)
     {
-        $brands=Brand::when($request->search_field,function($query) use ($request){
+        $brands = Brand::when($request->search_field, function ($query) use ($request) {
             return $query->whereAny([
                 'name',
                 'slug'
-            ],'like','%'.$request->search_field.'%');
+            ], 'like', '%' . $request->search_field . '%');
         })->paginate(20);
-        return view('brands.index',compact('brands'));
+        return view('brands.index', compact('brands'));
     }
 
     public function create(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+        ]);
+        $path = ' ';
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('brands', 'public');
+        }
 
-    $path=' ';
-        if($request->hasFile('image'))
-            {
-                $path=$request->file('image')->store('brands','public');
-            }
-
-        $item=new Brand();
-        $item->name=$request->name;
-        $item->slug=$request->slug;
-        $item->image=$path;
+        $item = new Brand();
+        $item->name = $request->name;
+        $item->slug = $request->slug;
+        $item->image = $path;
         $item->save();
 
         return back();
@@ -41,27 +43,25 @@ class BrandController extends Controller
 
     public function edit($id)
     {
-        $brand=Brand::where('id',$id)->first();
-        return view('brands.edit',compact('brand'));
+        $brand = Brand::where('id', $id)->first();
+        return view('brands.edit', compact('brand'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $item=Brand::where('id',$id)->first();
-        $path=' ';
-    if($request->hasFile('image'))
-        {
-            if($item->image)
-                {
-                    Storage::disk('public')->delete($item->image);
-                }
+        $item = Brand::where('id', $id)->first();
+        $path = ' ';
+        if ($request->hasFile('image')) {
+            if ($item->image) {
+                Storage::disk('public')->delete($item->image);
+            }
 
-                $path=$request->file('image')->store('brands','public');
+            $path = $request->file('image')->store('brands', 'public');
         }
 
-        $item->name=$request->name;
-        $item->slug=$request->slug;
-        $item->image=$path;
+        $item->name = $request->name;
+        $item->slug = $request->slug;
+        $item->image = $path;
         $item->update();
 
         return back();
@@ -69,12 +69,11 @@ class BrandController extends Controller
 
     public function destroy($id)
     {
-        $brand=Brand::where('id',$id)->first();
+        $brand = Brand::where('id', $id)->first();
 
-        if($brand->image)
-            {
-                Storage::disk('public')->delete($brand->image);
-            }
+        if ($brand->image) {
+            Storage::disk('public')->delete($brand->image);
+        }
 
 
         $brand->delete();
