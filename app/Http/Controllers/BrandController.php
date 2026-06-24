@@ -38,7 +38,14 @@ class BrandController extends Controller
         $item->image = $path;
         $item->save();
 
-        return back();
+        // request
+        // $request->session()->put('abc', 'the brand is created successfully');
+        // session(['bbbb' => 'session with session helper']);
+        // session()->forget(['bbbb', 'abc']);
+        // session()->flush();
+        // session()->flash('success', 'Brand is created successfully');
+
+        return back()->with('success', 'Brand is created successfully');
     }
 
     public function edit($id)

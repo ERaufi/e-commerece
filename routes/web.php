@@ -17,7 +17,7 @@ Route::post('/register', [AuthController::class, 'store'])->name('register.store
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('brands')->middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/', [BrandController::class, 'index'])->middleware(['throttle:3,1']);
+    Route::get('/', [BrandController::class, 'index'])->middleware(['throttle:20,1']);
     Route::view('create', 'brands.add');
     Route::post('add', [BrandController::class, 'create']);
     Route::delete('delete/{id}', [BrandController::class, 'destroy']);

@@ -1,13 +1,16 @@
 @extends('layouts.mainLayout')
 
 @section('contect')
-
     <x-validation-errors />
+
+    @if (session('success'))
+        {{ session('success') }}
+    @endif
 
     <div class="page-container narrow">
         <div class="table-card">
             <div class="card-body">
-                <form method="POST" action="{{URL('brands/add')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{ URL('brands/add') }}" enctype="multipart/form-data">
                     @csrf
 
                     @include('brands.Templates.Fields')
